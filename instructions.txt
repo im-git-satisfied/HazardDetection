@@ -1,10 +1,10 @@
 
 # Program 7
-#lw $r1, 0($r2) 
-#add $r1, $r1, $t0 
-#sw $r1, 0($r2) 
-#add $r2, $r2, $t1 
-#sub $r4, $r3, $r2 
+lw $r1, 0($r2) 
+add $r1, $r1, $t0 
+sw $r1, 0($r2) 
+add $r2, $r2, $t1 
+sub $r4, $r3, $r2 
 
 # Program 6
 #add $s0, $s0, $t2 

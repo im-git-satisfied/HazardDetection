@@ -111,7 +111,11 @@ class Program:
         stall_func = None
 
         if self.fw:
-            stalls = reg_obj.avail_fw - (self.cycle+3)
+            if self.curr_ins.operation in ["LD", "SD", "LW", "SW"]:
+                stalls = reg_obj.avail_fw - (self.cycle+4)
+            else:
+                stalls = reg_obj.avail_fw - (self.cycle+3)
+                
             hazard_str = fw_str
             curr_stalls = self.curr_ins.stalls_fw
             stall_func = self.curr_ins.stall_fw
@@ -162,8 +166,11 @@ class Program:
             if self.curr_ins.operation in ["ADD", "SUB", "MUL", "DIV", "ADDI", "DIVI", "MULI", "SUBI"]:
                 self.registers[self.curr_ins.target_reg].set_avail_fw(self.cycle+4)
 
-            if self.curr_ins.operation in ["LD", "SW", "LW", "SD"]:
+            if self.curr_ins.operation in ["LD", "LW"]:
                 self.registers[self.curr_ins.target_reg].set_avail_fw(self.cycle+5)
+            
+            if self.curr_ins.operation in ["SW", "SD"]:
+                self.registers[self.curr_ins.target_reg].set_avail_fw(self.cycle)
 
         else:        
             if self.curr_ins.operation in ["SW", "SD"]:
